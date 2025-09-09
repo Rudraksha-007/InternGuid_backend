@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import '../App.css';
 import { Link } from "react-router-dom"; 
+import Navbar from "./Navbar";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,10 +12,13 @@ const Dashboard = () => {
   };
 
   return (
+    
     <div className="dashboard ">
+      <Navbar/>
       <div className="topBox">
         <div className="content">
-          <button>Profile</button>
+          <button>
+            <Link to="/Profile">Profile</Link></button>
         <button>
           <Link to="/Login">Login</Link>
           </button>
