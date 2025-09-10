@@ -1,6 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
-import '../App.css';
+import { Link } from "react-router-dom";
+import { FaHome, FaSearch, FaRobot, FaEnvelope } from "react-icons/fa"; 
+import "../App.css";
+
 const Navbar = () => {
   return (
     <nav className="navbar">
@@ -9,16 +11,28 @@ const Navbar = () => {
       </div>
       <ul className="navbar-links">
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <FaHome className="icon" />
+            <span className="link-text">Home</span>
+          </Link>
         </li>
         <li>
-          <Link to="/features">Features</Link>
+          <Link to="/Discover">
+            <FaSearch className="icon" />
+            <span className="link-text">Discover</span>
+          </Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/SmartAssistant">
+            <FaRobot className="icon" />
+            <span className="link-text">Smart Assistant</span>
+          </Link>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">
+            <FaEnvelope className="icon" />
+            <span className="link-text">Contact</span>
+          </Link>
         </li>
       </ul>
     </nav>

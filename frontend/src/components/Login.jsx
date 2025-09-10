@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-
+import { Link } from "react-router-dom";
 const LoginPage = () => {
   return (
 <div className="login-container">
@@ -29,7 +29,8 @@ const LoginPage = () => {
       </form>
 
       <p className="register-text">
-        New to InternHub? <a href="/">Register Now</a>
+        New to InternHub?<Link to="/SignUp">Sign Up</Link>
+
       </p>
     </div>
   </div>
