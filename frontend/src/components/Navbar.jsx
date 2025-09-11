@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaSearch, FaRobot, FaEnvelope } from "react-icons/fa"; 
+import { FaHome, FaSearch, FaRobot } from "react-icons/fa";
+
 import "../App.css";
 
 const Navbar = () => {
@@ -17,6 +18,12 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
+          <Link to="/Dashboard2">
+            <FaRobot className="icon" />
+            <span className="link-text">Dashboard</span>
+          </Link>
+        </li>
+        <li>
           <Link to="/Discover">
             <FaSearch className="icon" />
             <span className="link-text">Discover</span>
@@ -25,13 +32,7 @@ const Navbar = () => {
         <li>
           <Link to="/SmartAssistant">
             <FaRobot className="icon" />
-            <span className="link-text">Smart Assistant</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/contact">
-            <FaEnvelope className="icon" />
-            <span className="link-text">Contact</span>
+            <span className="link-text">Assistant</span>
           </Link>
         </li>
       </ul>

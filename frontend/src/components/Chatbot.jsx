@@ -28,7 +28,7 @@ const SmartAssistant = () => {
 
   return (
     <div className="chat-container">
-        {/* <Navbar/> */}
+        <Navbar/>
       <div className="chat-box">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
