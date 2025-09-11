@@ -102,26 +102,44 @@ const Discover = () => {
         {filteredInternships.length > 0 ? (
           filteredInternships.map((internship) => (
             <div key={internship.id} className="internship-card">
-              <h3>{internship.title}</h3>
-              <p><strong>Company:</strong> {internship.company}</p>
-              <p><strong>Type:</strong> {internship.type}</p>
-              <p><strong>Duration:</strong> {internship.duration}</p>
-              <p><strong>Location:</strong> {internship.location}</p>
-              <p className="details">{internship.details}</p>
+  <div className="card-header">
+    <div>
+      <h3>{internship.title}</h3>
+      <p className="company-name">{internship.company}</p>
+      <div className="card-meta">
+        <MdLocationOn className="meta-icon" />
+        <span>{internship.location}</span>
+        <span className="domain-pill">Technology</span>
+        <span className="stipend">₹25,000/month</span>
+      </div>
+    </div>
+    <div className="match-score">
+      <strong>{internship.matchPercentage}%</strong>
+      <p className="match-label">Match Score</p>
+    </div>
+  </div>
 
-              {/* 🔹 Skill Match Progress Bar */}
-              <div className="progress-container">
-                <div
-                  className="progress-bar"
-                  style={{ width: `${internship.matchPercentage}%` }}
-                ></div>
-              </div>
-              <p className="match-text">
-                Skills Match: {internship.matchPercentage}%
-              </p>
+  <div className="skills-progress">
+    <span className="skills-label">Skills Match:</span>
+    <div className="progress-bar-wrapper">
+      <div
+        className="progress-bar-fill"
+        style={{ width: `${internship.matchPercentage}%` }}
+      ></div>
+    </div>
+  </div>
 
-              <button className="apply-btn">Apply Now</button>
-            </div>
+  <div className="skill-tags">
+    <span className="tag">React</span>
+    <span className="tag">Python</span>
+    <span className="tag">Machine Learning</span>
+  </div>
+
+  <p className="rural-note">🌟 Rural Background Preferred</p>
+
+  <button className="apply-btn">Apply Now</button>
+</div>
+
           ))
         ) : (
           <p className="no-results">No internships found 🚫</p>

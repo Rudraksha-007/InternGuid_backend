@@ -12,6 +12,9 @@ body{
   overflow-y: auto;
 }
 
+
+
+
 .navbar {
   position: fixed;
   top: 0;
@@ -183,11 +186,12 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(1, 30, 79, 0.75), rgba(38, 38, 39, 0.75)),
-              url('./assets/bgimg1.jpg') no-repeat center center;
+  background: linear-gradient(135deg, rgba(15, 98, 222, 0.861), rgba(220, 116, 5, 0.811)),
+            url('./assets/bgimg1.jpg') no-repeat center center;
+
   background-size: cover;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .login-form {
@@ -296,116 +300,6 @@ form input:focus {
 }
 
 
-.signup-bg {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(rgba(9, 9, 9, 0.75), rgba(38, 38, 39, 0.75)),
-              url('./assets/bgimg1.jpg') no-repeat center center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.signup-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 40px 40px;
-  max-width: 900px; /* Increased */
-  width: 90%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  color: #fff;
-  margin-top: 30px;
-  margin-bottom: 20px;
-
-}
-
-.signup-card h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.signup-card p {
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: 25px;
-  color: #e0e0e0;
-}
-
-/* Two-column form */
-.signup-card form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-
-}
-
-.signup-card input,
-.signup-card select {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #94a3b8;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 14px;
-  outline: none;
-}
-
-.signup-card input::placeholder {
-  color: #cbd5e1;
-}
-
-.signup-card select:invalid {
-  color: #cbd5e1;
-}
-
-.signup-card input:focus,
-.signup-card select:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
-}
-
-.signup-card input[type="file"] {
-  grid-column: span 2;
-  color: white;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-}
-
-.signup-card button {
-  grid-column: span 2;
-  background: #38bdf8;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.signup-card button:hover {
-  background: #0ea5e9;
-}
-
-@media (max-width: 768px) {
-  .signup-card form {
-    grid-template-columns: 1fr;
-  }
-
-  .signup-card input[type="file"],
-  .signup-card button {
-    grid-column: span 1;
-  }
-}
 
 @media (max-width: 768px) {
   .profile-layout {
@@ -946,11 +840,6 @@ Vacancies section */
   box-sizing: border-box;
 }
 
-
-
-
-
-
 .greeting-card {
   display: flex;
   justify-content: space-between;
@@ -1205,4 +1094,204 @@ Vacancies section */
   color: red;
   font-size: 0.9rem;
   margin-bottom: 10px;
+}
+
+/* Style <select> and <textarea> same as input */
+form select,
+form textarea {
+  padding: 12px;
+  margin-bottom: 0px;
+  border-radius: 8px;
+  border: 1px solid #94a3b8;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  outline: none;
+  resize: none; /* prevent manual resize */
+}
+
+form select:focus,
+form textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+}
+
+
+
+form select {
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #94a3b8;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+form select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+}
+
+.error-text {
+  background: rgba(255, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  color: #f87171;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup-container {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(15, 98, 222, 0.861), rgba(220, 116, 5, 0.811)),
+            url('./assets/bgimg1.jpg') no-repeat center center;
+
+  background-size: cover;
+  position: relative;
+  overflow: auto;
+}
+
+
+.internship-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 26px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.3s ease;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.company-name {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.meta-icon {
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.domain-pill {
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.stipend {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.match-score {
+  text-align: right;
+  font-size: 1.2rem;
+  color: #2563eb;
+}
+
+.match-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.skills-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skills-label {
+  font-size: 0.9rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.progress-bar-wrapper {
+  background: #e5e7eb;
+  border-radius: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(to right, #2563eb, #fb923c);
+  transition: width 0.4s ease;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: #f97316;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.rural-note {
+  font-size: 0.9rem;
+  color: #b45309;
+  margin-top: 6px;
+}
+
+.apply-btn {
+  align-self: flex-end;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #3b82f6, #f97316);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
