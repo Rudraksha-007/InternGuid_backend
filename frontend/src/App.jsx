@@ -8,13 +8,14 @@ import ProfilePage from './components/Profile'
 import Chatbot from './components/Chatbot'
 import Discover from './components/Discover'
 import Dashboard2 from './components/Dashboard2'
+import Home from './components/Home'
 const App = () => {
   return (
     <div>
       {/* <Navbar/> */}
       <main>
         <Routes>
-          <Route path='/' element={<Dashboard/>}/>
+          <Route path='/' element={<Home/>}/>
           <Route path='/Login' element={<LoginPage/>}/>
           <Route path='/SignUp' element={<SignUpPage/>}/>
           <Route path='/Profile' element={<ProfilePage/>}/>
