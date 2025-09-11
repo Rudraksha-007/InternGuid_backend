@@ -1,12 +1,14 @@
 import React from "react";
 import "../App.css";
 import Navbar from "./Navbar";
+import Header from "./HeaderComponents/Header";
 
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
-        <Navbar />
-      <div className="greeting-card">
+        {/* <Navbar /> */}
+        <Header />
+      {/* <div className="greeting-card">
         <div>
           <h2 className="greeting-title">Hi, Alyssa 👋</h2>
           <p className="greeting-subtitle">
@@ -35,7 +37,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Recommended Internships */}
+      
       <div className="section">
         <h2 className="section-title">Recommended Internships for You</h2>
         <div className="card-grid">
@@ -54,7 +56,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Events Section */}
+      
       <div className="section">
         <h2 className="section-title">Upcoming Events</h2>
         <div className="card-grid">
@@ -75,8 +77,8 @@ const Dashboard = () => {
             <button className="btn-blue">Register</button>
           </div>
         </div>
-      </div>
-    </div>
+      </div>*/}
+    </div> 
   );
 };
 

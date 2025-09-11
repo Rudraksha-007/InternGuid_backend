@@ -1,0 +1,276 @@
+.dashboard {
+  background: #f9fafb;
+  padding: 4rem 0;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.dashboard-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+}
+
+.stat-card h3, .stat-card div {
+  color: #111827;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.stat-sub {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+.icon.primary { color: #2563eb; }
+.icon.secondary { color:   hsl(26, 100%, 24%)}
+
+.inline-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.25rem;
+}
+
+/* Main Layout */
+.main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.matches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matches-actions button {
+  margin-left: 0.5rem;
+}
+
+.match-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.match-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.match-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.match-top h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.match-top p {
+  color: #6b7280;
+}
+
+.match-score {
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.match-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.match-info .stipend {
+  color: #111827;
+  font-weight: 500;
+}
+
+.match-skills {
+  margin-bottom: 1rem;
+}
+
+/* .match-btn{
+    background-color: #2563eb;;
+    color: white;
+    border-radius:0.79rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+} */
+
+.match-btn {
+  background: linear-gradient(135deg, #2563eb, #f97316); /* blue → orange */
+  color: white;
+  border-radius: 0.79rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.3s ease;
+}
+
+.match-btn:hover {
+  opacity: 0.9; /* subtle hover effect */
+}
+
+
+
+.match-diversity{
+    color: hsl(26, 100%, 24%);
+    font-weight: 600;
+}
+.skills-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.skills-progress span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.match-skill{
+    background-color: hsl(26 90% 58%);
+    color: white
+}
+
+.match-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diversity {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.diversity .secondary {
+  color: hsl(26 90% 58%)
+}
+
+/* Side Panel */
+.side-panel .criteria {
+  margin-bottom: 1rem;
+}
+
+.criteria-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.affirmative-card {
+  background: linear-gradient(135deg, #2563eb, hsl(26 90% 58%));
+  color: white;
+}
+
+.affirmative-list div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.update-btn {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: hsl(26 90% 58%);
+  border-radius:0.5rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.update-btn:hover {
+  background-color: hsl(26 90% 60%);
+}
+.greeting-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #0560e1, #c35704cd);  border-radius: 16px;
+  padding: 20px;
+  margin-top: 3rem;
+  margin-bottom: 32px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #fafdfe;
+}
+.greeting-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.greeting-subtitle {
+  color: #f5f1f1;
+  margin-top: 8px;
+}
+
+.points-card{
+    background-color: hsl(26 90% 58%);
+    color: white;
+}

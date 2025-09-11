@@ -31,7 +31,7 @@ const Hero = () => {
 
         {/* Buttons */}
         <div className="hero-buttons">
-          <Link to="/Dashboard2" className="btn btn-primary flex items-center gap-2">
+          <Link to="/Dashboard" className="btn btn-primary flex items-center gap-2">
             Find My Match <ArrowRight className="icon" />
           </Link>
           <a href="#HowItWorks" className="btn btn-outline">How It Works</a>
