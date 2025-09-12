@@ -9,7 +9,7 @@ import torch
 class InternshipSearchEngine:
     def __init__(self, dataframe):
         self.df = dataframe.copy().reset_index(drop=True) # Ensure clean integer index
-        
+            
         # Determine the device to use (GPU if available, otherwise CPU)
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print(f"Using device: {self.device}")
