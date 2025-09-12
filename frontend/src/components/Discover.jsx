@@ -3,6 +3,7 @@ import "../App.css";
 import Navbar from "./Navbar";
 import { CiSearch } from "react-icons/ci";
 import { MdLocationOn, MdWorkOutline } from "react-icons/md";
+import Header from "./HeaderComponents/Header";
 
 const Discover = () => {
   const [search, setSearch] = useState("");
@@ -58,7 +59,8 @@ const Discover = () => {
 
   return (
     <div className="discover-container">
-      <Navbar />
+      {/* <Navbar /> */}
+      <Header />
       {/* 🔍 Search & Filters */}
       <div className="filters">
         {/* Search Bar */}

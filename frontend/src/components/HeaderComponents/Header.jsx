@@ -1,7 +1,7 @@
 // import { Button } from "@/components/ui/button";
 import { Users, Building } from "lucide-react";
 import "./Header.css"; // Import external CSS
-
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header className="header">
@@ -17,10 +17,10 @@ const Header = () => {
         </div>
 
         <nav className="nav">
-          <a href="#">Dashboard</a>
-          <a href="#">Opportunities</a>
-          <a href="#">Candidates</a>
-          <a href="#">Reports</a>
+          <Link to="/">Home</Link>
+          <Link to="/Dashboard">Dashboard</Link>
+          <Link to="/Discover">Discover</Link>
+          <Link to="/SmartAssistant">AI</Link>
         </nav>
 
         <div className="header-right">

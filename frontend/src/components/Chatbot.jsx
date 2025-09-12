@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 import Navbar from "./Navbar";
+import Header from "./HeaderComponents/Header";
 
 const SmartAssistant = () => {
   const [messages, setMessages] = useState([
@@ -28,7 +29,8 @@ const SmartAssistant = () => {
 
   return (
     <div className="chat-container">
-        <Navbar/>
+        {/* <Navbar/> */}
+        <Header/>
       <div className="chat-box">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
