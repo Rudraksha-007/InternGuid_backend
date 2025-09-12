@@ -3,100 +3,178 @@ import numpy as np
 from sentence_transformers import SentenceTransformer, util
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import os
+import time
+import torch
 
-# core implementation of the search engine:
 class InternshipSearchEngine:
     def __init__(self, dataframe):
-        self.df = dataframe.copy()
-        self.bert_model = SentenceTransformer('all-MiniLM-L6-v2')
-        #removes common words like is, the, a, an etc. and builtds TF-IDF vocab
-        self.tfidf_vectorizer = TfidfVectorizer(stop_words='english')  
-        self._prepare()
+        self.df = dataframe.copy().reset_index(drop=True) # Ensure clean integer index
+        
+        # Determine the device to use (GPU if available, otherwise CPU)
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        print(f"Using device: {self.device}")
 
-    def _prepare(self):
-        print("Preparing search engine: generating embeddings and vectors...")
+        # Load the model onto the chosen device
+        self.bert_model = SentenceTransformer('all-MiniLM-L6-v2', device=self.device)
+        
+        # --- Initialize vectorizers (unchanged) ---
+        self.title_vectorizer = TfidfVectorizer(stop_words='english', min_df=2, max_df=0.95)
+        self.location_vectorizer = TfidfVectorizer(stop_words='english', min_df=2, max_df=0.95)
+        self.degree_vectorizer = TfidfVectorizer(stop_words='english', min_df=1) # min_df=1 might be okay for degrees
+        
+        # --- Pre-compute and index everything once ---
+        self._prepare_indices()
 
-        # Semantic aware search ke liye BERT ko data feed kr reh hain: 
-        # for every row in data frame we excode the skills with bert model and store the embedding in new column in data frame 
-        # dense vector :
-        self.df['skills_embedding'] = self.df['skills'].apply(
-            lambda x: self.bert_model.encode(x, convert_to_tensor=True)
+    def _prepare_indices(self):
+        """
+        Pre-computes all embeddings and TF-IDF matrices.
+        """
+        print("Preparing search engine: generating embeddings and TF-IDF matrices...")
+        start_time = time.time()
+
+        # --- Semantic Part: Pre-compute ALL embeddings in a single batch ---
+        # This is much faster than using .apply() row-by-row.
+        print("Encoding skills...")
+        self.skills_embeddings = self.bert_model.encode(
+            self.df['skills'].tolist(), 
+            convert_to_tensor=True, 
+            show_progress_bar=True,
+            device=self.device
         )
-        self.df['domain_embedding'] = self.df['domain'].apply(
-            lambda x: self.bert_model.encode(x, convert_to_tensor=True)
+        
+        print("Encoding domains...")
+        self.domain_embeddings = self.bert_model.encode(
+            self.df['domain'].tolist(), 
+            convert_to_tensor=True, 
+            show_progress_bar=True,
+            device=self.device
         )
-        # TODO : Add more semantic fields if needed and fix the weights accordingly + tweak weights 
-        # For TF-IDF Lexical Search (title, location, degree, work_mode)
+        
+        # --- Lexical Part: Pre-compute all TF-IDF matrices (unchanged, as it's already efficient) ---
+        print("Fitting TF-IDF vectorizers...")
+        self.title_tfidf = self.title_vectorizer.fit_transform(self.df['title'].astype(str))
+        self.location_tfidf = self.location_vectorizer.fit_transform(self.df['location'].astype(str))
+        self.degree_tfidf = self.degree_vectorizer.fit_transform(self.df['degree'].astype(str))
+        
+        end_time = time.time()
+        print(f"Preparation complete. Took {end_time - start_time:.2f} seconds.")
 
-        # Combine the columns into a single string for TF-IDF:
-        self.df['lexical_text'] = self.df['title'] + " " + self.df['location'] + " " + self.df['degree'] + " " + self.df['work_mode']
+    def search(self, query, rindex, top_k=5, r_index_sharpness=0.1):
+        """
+        Performs a search using pre-computed indices. This part is now very fast.
+        """
+        
+        # Create a new DataFrame for scores to avoid modifying the original
+        scores_df = pd.DataFrame(index=self.df.index)
 
-        self.tfidf_matrix = self.tfidf_vectorizer.fit_transform(self.df['lexical_text'])
-        print("Preparation complete.")
-
-    def search(self, query, top_k=5):
-        # smbed the semantic parts of the query into bert model
-        skills_query_embedding = self.bert_model.encode(query.get('skills', ''), convert_to_tensor=True)
-        domain_query_embedding = self.bert_model.encode(query.get('domain', ''), convert_to_tensor=True)
-
-        # Calculate cosine similarity
-        self.df['skills_score'] = self.df['skills_embedding'].apply(
-            lambda x: util.cos_sim(skills_query_embedding, x).item()
-        )
-        self.df['domain_score'] = self.df['domain_embedding'].apply(
-            lambda x: util.cos_sim(domain_query_embedding, x).item()
-        )
-
-        # combine and vectorize the lexical parts of the query
-        lexical_query_text = " ".join([query.get(key, '') for key in ['title', 'location', 'degree', 'work_mode']])
-
-        if lexical_query_text.strip() == "":
-             # If no lexical query, score is 0
-            self.df['lexical_score'] = 0.0
+        # --- Semantic Search: Perform a single, vectorized similarity calculation ---
+        # This compares the query embedding to ALL document embeddings at once.
+        if query.get('skills'):
+            skills_query_embedding = self.bert_model.encode(query['skills'], convert_to_tensor=True, device=self.device)
+            skills_scores = util.cos_sim(skills_query_embedding, self.skills_embeddings).squeeze()
+            scores_df['skills_score'] = skills_scores.cpu().numpy() # Move tensor to CPU for numpy conversion
         else:
-            query_tfidf_vector = self.tfidf_vectorizer.transform([lexical_query_text])
-            self.df['lexical_score'] = cosine_similarity(query_tfidf_vector, self.tfidf_matrix).flatten()
+            scores_df['skills_score'] = 0.0
 
+        if query.get('domain'):
+            domain_query_embedding = self.bert_model.encode(query['domain'], convert_to_tensor=True, device=self.device)
+            domain_scores = util.cos_sim(domain_query_embedding, self.domain_embeddings).squeeze()
+            scores_df['domain_score'] = domain_scores.cpu().numpy()
+        else:
+            scores_df['domain_score'] = 0.0
+            
+        # --- Lexical search: Also vectorized and fast ---
+        if query.get('title'):
+            query_title_vec = self.title_vectorizer.transform([query['title']])
+            scores_df['title_score'] = cosine_similarity(query_title_vec, self.title_tfidf).flatten()
+        else:
+            scores_df['title_score'] = 0.0
+            
+        if query.get('location'):
+            query_location_vec = self.location_vectorizer.transform([query['location']])
+            scores_df['location_score'] = cosine_similarity(query_location_vec, self.location_tfidf).flatten()
+        else:
+            scores_df['location_score'] = 0.0
 
-        # combination of linear weights
+        if query.get('degree'):
+            query_degree_vec = self.degree_vectorizer.transform([query['degree']])
+            scores_df['degree_score'] = cosine_similarity(query_degree_vec, self.degree_tfidf).flatten()
+        else:
+            scores_df['degree_score'] = 0.0
+
+        # --- Numeric similarity for 'r_index' (already efficient) ---
+        if rindex is not None and 'r_index' in self.df.columns:
+            diff = np.abs(self.df['r_index'] - rindex)
+            scores_df['r_index_score'] = np.exp(-r_index_sharpness * diff)
+        else:
+            scores_df['r_index_score'] = 0.0
+
+        # --- Final Score Combination ---
         weights = {
-            'skills': 0.5, 
-            'domain': 0.3,
-            'lexical': 0.8
+            'skills': 0.5, 'domain': 0.3, 'title': 0.4,
+            'location': 0.2, 'degree': 0.1, 'r_index': 0.3
         }
         
-        self.df['final_score'] = (
-            weights['skills'] * self.df['skills_score'] +
-            weights['domain'] * self.df['domain_score'] +
-            weights['lexical'] * self.df['lexical_score']
+        scores_df['final_score'] = (
+            weights['skills'] * scores_df['skills_score'] +
+            weights['domain'] * scores_df['domain_score'] +
+            weights['title'] * scores_df['title_score'] +
+            weights['location'] * scores_df['location_score'] +
+            weights['degree'] * scores_df['degree_score'] +
+            weights['r_index'] * scores_df['r_index_score']
         )
         
-        # Return top K results
-        results = self.df.sort_values(by='final_score', ascending=False).head(top_k)
-        return results[['title', 'location', 'skills', 'domain', 'final_score']]
+        # --- Combine scores with original data and return results ---
+        results_df = self.df.join(scores_df)
+        results = results_df.sort_values(by='final_score', ascending=False).head(top_k)
+        
+        display_columns = ['title', 'location', 'skills', 'domain', 'r_index', 'final_score']
+        display_columns = [col for col in display_columns if col in results.columns]
+        return results[display_columns]
 
 if __name__ == "__main__":
     CSV_FILE = "internship_database.csv"
+
+    # --- Step 1: Load data and initialize the engine (This is the one-time slow part) ---
+    print("Loading data...")
+    df = pd.read_csv(CSV_FILE).dropna(subset=['skills', 'domain', 'title', 'location', 'degree'])
     
-
-    # Load the data from CSV
-    df = pd.read_csv(CSV_FILE)
-
-    # Initialize the search engine
     engine = InternshipSearchEngine(df)
 
-    print("\n--- Running a new search ---")
-    user_query = {
-        'title': 'Software Engineer',
-        'location': 'Bangalore',
-        'degree': 'MCA', # Not specified
-        'work_mode': 'Onsite', # Not specified
-        'domain': 'AI or Data',
-        'skills': 'python machine learning'
-    }
+    # --- Step 2: Interactive search loop (This part is now fast) ---
+    while True:
+        print("\n--- Enter Your Internship Query (press Enter to skip a field) ---")
+        
+        try:
+            # Collect user input
+            title_q = input("Job Title (e.g., Software Engineer, Data Analyst): ")
+            skills_q = input("Skills (e.g., python machine learning tensorflow): ")
+            domain_q = input("Domain (e.g., Artificial Intelligence, Web Development): ")
+            location_q = input("Location (e.g., Bangalore, Remote): ")
+            degree_q = input("Degree (e.g., B.Tech, MCA): ")
+            
+            rindex_q_str = input("Your Relevance Index (r_index, a number from 1-10): ")
+            if rindex_q_str.lower() in ['quit', 'exit']:
+                break
+            rindex_q = float(rindex_q_str) if rindex_q_str else None
 
-    print(f"User Query: {user_query}")
-    search_results = engine.search(user_query, top_k=50)
-    print("\n--- Top Search Results ---")
-    print(search_results.to_string())
+            user_query = {
+                'title': title_q,
+                'location': location_q,
+                'degree': degree_q,
+                'domain': domain_q,
+                'skills': skills_q
+            }
+
+            print("\nSearching...")
+            start_search_time = time.time()
+            search_results = engine.search(user_query, rindex_q, top_k=10)
+            end_search_time = time.time()
+
+            print(f"\n--- Top 10 Search Results (search took {end_search_time - start_search_time:.4f} seconds) ---")
+            print(search_results.to_string())
+
+        except ValueError:
+            print("Invalid input for r_index. Please enter a number or leave it blank.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
