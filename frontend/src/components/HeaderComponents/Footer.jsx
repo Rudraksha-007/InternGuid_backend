@@ -59,7 +59,7 @@ const Footer = () => {
 
       {/* Bottom Text */}
       <div className="footer-bottom">
-        <p>© 2024 PM Internship Scheme - Smart Matching System. All rights reserved.</p>
+        <p>© 2025 PM Internship Scheme - Smart Matching System. All rights reserved.</p>
       </div>
     </footer>
   );

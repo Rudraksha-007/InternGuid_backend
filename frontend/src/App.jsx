@@ -9,6 +9,7 @@ import Discover from './components/Discover'
 // import Dashboard2 from './components/Dashboard2'
 import Dashboard from './components/Dashboard'
 import Home from './components/Home'
+import AdminDashboard from './components/Admin/Admin'
 const App = () => {
   return (
     <div>
@@ -22,6 +23,7 @@ const App = () => {
           <Route path='/SmartAssistant' element={<Chatbot/>}/>
           <Route path='/Discover' element={<Discover/>}/>
           <Route path='/Dashboard' element={<Dashboard/>}/>
+          <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
         </Routes>
       </main>
     </div>

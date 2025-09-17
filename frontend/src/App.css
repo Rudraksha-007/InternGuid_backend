@@ -6,7 +6,7 @@ html {
 body{
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #EEEEEE;
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(249, 115, 22, 0.1));
   color: #333;
   overflow-x: hidden;
   overflow-y: auto;
@@ -679,150 +679,259 @@ Vacancies section */
   background-color: #1f3543;
 }
 
-/* Discover container */
+/* 🔹 Discover container */
 .discover-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 25px 15px;
-  font-family: "Inter", sans-serif;
+  padding-top: 90px; /* header spacing */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
-/* Filters */
+/* 🔹 Filters */
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
   justify-content: center;
-  margin-left: 250px;
-  color: #0e0d0d;
+  width: 100%;
+}
+
+.filters .input-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px 14px;
+  flex: 1;
+  min-width: 230px;
+  transition: all 0.3s ease;
+}
+
+.filters .icon {
+  font-size: 1.2rem;
+  color: #052657;
 }
 
 .filters input,
 .filters select {
-  padding: 12px 16px;
-  border-radius: 12px;
   border: none;
-  font-size: 0.95rem;
-  min-width: 220px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  color: #1c1c1c;
+  background: transparent;
   outline: none;
-  /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
-  transition: all 0.3s ease;
+  flex: 1;
+  font-size: 0.95rem;
+  color: #1c1c1c;
 }
 
 .filters input::placeholder {
-  color: #1e1e1e;
+  color: #666;
+  font-style: italic;
 }
 
-.filters input:focus,
-.filters select:focus {
-  background: rgba(255, 255, 255, 0.25);
+.filters select {
+  cursor: pointer;
+}
+
+.filters .input-icon:focus-within {
   border: 1px solid #4f7dbd;
-  /* box-shadow: 0 0 10px rgba(79, 125, 189, 0.4); */
+  background: rgba(255, 255, 255, 0.25);
 }
 
-/* Internship list grid */
+/* 🔹 Internship list grid */
 .internship-list {
-  width: 70%;
-  margin-left: 300px;
-  display: flex;
-  flex-direction: column;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
+  width: 100%;
 }
 
+/* 🔹 Internship card */
 .internship-card {
   background: linear-gradient(135deg, #ffffff, #f9f9f9);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 22px;
   border: 1px solid #e6e6e6;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.internship-card::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(79,125,189,0.15), transparent 60%);
-  transform: rotate(25deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .internship-card:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-.internship-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #052657;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.card-header h3 {
+  font-size: 1.25rem;
   font-weight: 600;
+  color: #052657;
 }
 
-.internship-card p {
-  margin: 6px 0;
-  font-size: 0.95rem;
-  color: #333;
+.company-name {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 4px;
 }
 
-.details {
-  font-style: italic;
-  color: #666;
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
   margin-top: 8px;
+  color: #444;
 }
 
-/* Apply button */
+.card-meta .meta-icon {
+  color: #052657;
+}
+
+/* 🔹 Match score */
+.match-score {
+  text-align: right;
+  color: #052657;
+}
+.match-score strong {
+  font-size: 1.3rem;
+}
+.match-label {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+/* 🔹 Skills progress bar */
+.skills-progress {
+  margin-top: 12px;
+}
+.skills-label {
+  font-size: 0.85rem;
+  color: #444;
+}
+.progress-bar-wrapper {
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 6px;
+  height: 8px;
+}
+.progress-bar-fill {
+  background: linear-gradient(90deg, #4f7dbd, #052657);
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+/* 🔹 Skill tags */
+.skill-tags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  background: #e8effa;
+  color: #052657;
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* 🔹 Rural note */
+.rural-note {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #444;
+  font-weight: 500;
+}
+
+/* 🔹 Apply button */
 .apply-btn {
-  margin-top: 18px;
+  margin-top: auto;
   padding: 12px 18px;
   background: linear-gradient(135deg, #4f7dbd, #052657);
   color: white;
   font-size: 0.95rem;
   font-weight: 500;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
 .apply-btn:hover {
   background: linear-gradient(135deg, #052657, #4f7dbd);
-  transform: scale(1.05);
+  transform: scale(1.03);
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* No results message */
+/* 🔹 No results */
 .no-results {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #888;
   text-align: center;
   margin-top: 40px;
   font-weight: 500;
 }
 
-/* ----------- Responsive ----------- */
+/* 🔹 Footer */
+.discoverFooter {
+  margin-top: 30px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: #0f172a;
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 0.85rem;
+}
+
+.filters .input-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  flex: unset; /* ❌ no forced stretching */
+}
+
+.filters input,
+.filters select {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.95rem;
+  color: #1c1c1c;
+  width: auto;  /* ✅ shrink to fit text */
+  min-width: unset; /* ✅ no forced width */
+}
 @media (max-width: 768px) {
   .filters {
-    flex-direction: column;
-    align-items: stretch;
-    margin: 0;
-    width: 50%;
-    display: flex;
-
+    flex-direction: row;
+    /* align-items: stretch; */
   }
-  .internship-list{
-    margin: 0;
-    width: 90%;
+
+  .filters .input-icon {
+    width: 50%; 
   }
 
   .filters input,
@@ -830,6 +939,54 @@ Vacancies section */
     width: 100%;
   }
 }
+
+
+
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden; /* ✅ prevent scrollbars */
+}
+
+.filters .input-icon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 8px 10px;
+  transition: all 0.3s ease;
+  flex: 1;         /* ✅ all take equal space */
+  min-width: 0;    /* ✅ prevents overflow */
+}
+
+.filters input,
+.filters select {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  color: #1c1c1c;
+  width: 100%;     /* ✅ expand within flex item */
+  min-width: 0;    /* ✅ let them shrink */
+}
+
+.filters input::placeholder {
+  color: #555;
+  font-style: italic;
+}
+
+.filters .input-icon:focus-within {
+  border: 1px solid #4f7dbd;
+  background: rgba(255, 255, 255, 0.25);
+}
+
 
 .dashboard-container {
   max-width: 1200px;
@@ -1063,24 +1220,6 @@ Vacancies section */
 }
 
 
-/* Progress Bar Container */
-.progress-container {
-  width: 100%;
-  background-color: #e4e4e4;
-  border-radius: 8px;
-  height: 12px;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-/* Actual Progress */
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #4cafef, #2196f3);
-  border-radius: 8px;
-  transition: width 0.4s ease-in-out;
-}
-
 /* Percentage Text */
 .match-text {
   font-size: 0.9rem;
@@ -1294,4 +1433,281 @@ form select:focus {
 .apply-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+
+.profile-container {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
+}
+
+.profile-form-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+
+.image-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.preview-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.placeholder-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+}
+
+.profile-form input,
+.profile-form select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #3b82f6, #f97316);
+  color: rgb(72, 70, 70);
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Applications Section */
+.applications-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.job-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.2s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.job-card h3 {
+  margin: 0;
+  color: #007bff;
+}
+
+.job-card p {
+  margin: 6px 0;
+  color: #555;
+}
+
+.apply-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.apply-btn:hover {
+  background-color: #218838;
+}
+@media (max-width: 600px) {
+  .profile-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 120px 5px;
+    padding: 20px 15px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .preview-img,
+  .placeholder-img {
+    width: 90px;
+    height: 90px;
+    font-size: 12px;
+  }
+
+  .profile-form {
+    width: 100%;
+  }
+
+  .profile-form input,
+  .profile-form select {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .button-container {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .button-container button {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .tabs {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .tab {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .job-card {
+    padding: 16px;
+    font-size: 14px;
+  }
+
+  .apply-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.tab {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.tab:hover {
+  color: #333;
+}
+
+/* Active Tab Styling */
+.tab.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px; /* adjust based on tab height */
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #3b82f6, #f97316);
+  border-radius: 4px;
+}
+
+/* Works on Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ebedf0, #013645);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ebedf0, #013645);
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f0f0f0;
+}
+
+/* Container wrapping the progress bar */
+.progress-bar-wrapper {
+  width: 100%;
+  height: 12px; /* height of the bar */
+  background-color: #e0e0e0; /* light gray background */
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #1030cf, #d5660ae2); 
+  border-radius: 6px 0 0 6px;
+  transition: width 0.5s ease-in-out;
+}
+
+.chat-container{
+  margin-top: 95px;
+  height: calc(100vh - 90px);
 }

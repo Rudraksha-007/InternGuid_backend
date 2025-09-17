@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import "../App.css"; // or './ProfilePage.css' if you're using a separate CSS file
+import Header from "./HeaderComponents/Header";
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
-  const [vacancies, setVacancies] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [profile, setProfile] = useState({
@@ -33,18 +34,18 @@ const ProfilePage = () => {
     alert("Profile updated successfully!");
   };
 
-  // Fetch vacancies when "Vacancies" tab is clicked
+  // Fetch applications when "Applications" tab is active
   useEffect(() => {
-    if (activeTab === "vacancies" && profile.skills) {
+    if (activeTab === "applications" && profile.skills) {
       setLoading(true);
-      fetch(`http://localhost:5000/api/vacancies?skills=${profile.skills}`)
+      fetch(`http://localhost:5000/api/applications?skills=${profile.skills}`)
         .then((res) => res.json())
         .then((data) => {
-          setVacancies(data);
+          setApplications(data);
           setLoading(false);
         })
         .catch((err) => {
-          console.error("Error fetching vacancies:", err);
+          console.error("Error fetching applications:", err);
           setLoading(false);
         });
     }
@@ -52,10 +53,9 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-container">
+      <Header />
       <div className="profile-form-wrapper">
         <h2>Account Setting</h2>
-
-        {/* Tabs */}
         <div className="tabs">
           <div
             className={`tab ${activeTab === "profile" ? "active" : ""}`}
@@ -64,17 +64,15 @@ const ProfilePage = () => {
             Profile
           </div>
           <div
-            className={`tab ${activeTab === "vacancies" ? "active" : ""}`}
-            onClick={() => setActiveTab("vacancies")}
+            className={`tab ${activeTab === "applications" ? "active" : ""}`}
+            onClick={() => setActiveTab("applications")}
           >
-            Vacancies
+            Applications
           </div>
         </div>
 
-        {/* Profile Section */}
         {activeTab === "profile" && (
           <>
-            {/* Profile image upload */}
             <div className="image-upload">
               <label htmlFor="profileImage">
                 {profile.profileImage ? (
@@ -181,27 +179,29 @@ const ProfilePage = () => {
           </>
         )}
 
-        {/* Vacancies Section */}
-        {activeTab === "vacancies" && (
-          <div className="vacancies-section">
+        {activeTab === "applications" && (
+          <div className="applications-section">
             {loading ? (
-              <p>Loading vacancies...</p>
-            ) : vacancies.length > 0 ? (
-              vacancies.map((job) => (
-                <div key={job.id} className="job-card">
-                  <h3>{job.title}</h3>
-                  <p>{job.company}</p>
+              <p>Loading applications...</p>
+            ) : applications.length > 0 ? (
+              applications.map((app) => (
+                <div key={app.id} className="job-card">
+                  <h3>{app.title}</h3>
+                  <p>{app.company}</p>
                   <p>
-                    <strong>Location:</strong> {job.location}
+                    <strong>Location:</strong> {app.location}
                   </p>
                   <p>
-                    <strong>Required Skills:</strong> {job.skills.join(", ")}
+                    <strong>Status:</strong> {app.status}
                   </p>
-                  <button className="apply-btn">Apply</button>
+                  <p>
+                    <strong>Skills:</strong> {app.skills.join(", ")}
+                  </p>
+                  <button className="apply-btn">View Details</button>
                 </div>
               ))
             ) : (
-              <p>No vacancies found for your skills.</p>
+              <p>No applications found for your skills.</p>
             )}
           </div>
         )}

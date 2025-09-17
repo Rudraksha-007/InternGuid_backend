@@ -1,7 +1,9 @@
 .header {
   background: var(--card);
   background-color: rgba(var(--card-rgb), 0.8);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px); 
+  border-top: 1px solid var(--border); 
+  box-shadow: var(--shadow-soft);;
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   position: fixed;
@@ -53,6 +55,7 @@
 
 .nav {
   display: none;
+  margin-right: 80px;
 }
 
 .nav a {
@@ -60,6 +63,9 @@
   color: var(--foreground);
   text-decoration: none;
   transition: color 0.3s ease;
+  font-weight: 550;
+  gap: 0.45rem;
+  color: rgb(3, 47, 245);
 }
 
 .nav a:hover {
@@ -88,17 +94,63 @@
 .profile-btn {
   display: flex;
   align-items: center;
-  background-color: rgba(227, 224, 224, 0.591);
+  background: linear-gradient(to right, #3b82f6, hsl(26 90% 58%));
   border: 1px solid rgba(128, 128, 128, 0.549);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  color: black;
+  color: rgb(255, 255, 255);
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-weight: 500;
 }
 
 .profile-btn:hover {
   color: rgba(92, 34, 3, 0.8);
   background-color: rgba(255, 199, 169, 0.595);
   border:  rgba(255, 199, 169, 0.933);
+}
+
+/* Bottom nav (mobile only, glassmorphism style) */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  background-color: rgba(var(--card-rgb), 0.8);
+  backdrop-filter: blur(6px); 
+  border-top: 1px solid var(--border); 
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+  z-index: 50;
+  color: rgb(235, 108, 11);
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.bottom-nav a:hover {
+  color: var(--primary);
+}
+
+.bottom-nav svg {
+  margin-bottom: 0.25rem;
+}
+
+/* Hide on desktop */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+    color: rgb(0, 51, 255);
+  }
 }

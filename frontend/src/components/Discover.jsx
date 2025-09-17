@@ -5,6 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { MdLocationOn, MdWorkOutline } from "react-icons/md";
 import Header from "./HeaderComponents/Header";
 import Footer from "./HeaderComponents/Footer";
+import "./HeaderComponents/Footer.css";
 
 const Discover = () => {
   const [search, setSearch] = useState("");
@@ -148,7 +149,9 @@ const Discover = () => {
           <p className="no-results">No internships found 🚫</p>
         )}
       </div>
-      <Footer />
+      <div className="discoverFooter">
+        <Footer />
+      </div>
     </div>
   );
 };

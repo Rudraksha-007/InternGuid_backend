@@ -75,8 +75,10 @@ const MainDashboard = () => {
           <Card className="stat-card">
             <CardHeader>
               <CardTitle>
+                <div className="card-title">
                 <Users className="icon primary" />
                 Total Candidates
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -91,8 +93,10 @@ const MainDashboard = () => {
           <Card className="stat-card">
             <CardHeader>
               <CardTitle>
+                <div className="card-title">
                 <Building2 className="icon secondary" />
                 Active Opportunities
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -107,8 +111,10 @@ const MainDashboard = () => {
           <Card className="stat-card">
             <CardHeader>
               <CardTitle>
+              <div className="card-title">
                 <Zap className="icon primary" />
                 Matches Made
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -123,8 +129,11 @@ const MainDashboard = () => {
           <Card className="stat-card">
             <CardHeader>
               <CardTitle>
+              <div className="card-title">
+
                 <Star className="icon secondary" />
                 Avg. Match Score
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -211,25 +220,25 @@ const MainDashboard = () => {
                   <div className="criteria-row">
                     <span>Skills Alignment</span><span>92%</span>
                   </div>
-                  <Progress value={92} />
+                  <Progress value={92} className="progress"/>
                 </div>
                 <div className="criteria">
                   <div className="criteria-row">
                     <span>Location Preference</span><span>100%</span>
                   </div>
-                  <Progress value={100} />
+                  <Progress value={100} className="progress" />
                 </div>
                 <div className="criteria">
                   <div className="criteria-row">
                     <span>Sector Interest</span><span>87%</span>
                   </div>
-                  <Progress value={87} />
+                  <Progress value={87} className="progress"/>
                 </div>
                 <div className="criteria">
                   <div className="criteria-row">
                     <span>Diversity Factors</span><span>95%</span>
                   </div>
-                  <Progress value={95} />
+                  <Progress value={95} className="progress"/>
                 </div>
               </CardContent>
             </Card>
