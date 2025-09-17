@@ -130,7 +130,7 @@ const HowItWorks = () => {
               {/* <button className="primary-btn">
                 Start Matching Process <ArrowRight className="icon" />
               </button> */}
-                <Link to="/login" className="primary-btn">
+                <Link to="/dashboard" className="primary-btn">
                     Start Matching Process <ArrowRight className="icon" />
                 </Link>
             </div>

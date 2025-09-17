@@ -1,57 +1,17 @@
-// import React from "react";
-// import "../App.css";
-// import { Link } from "react-router-dom";
-// const LoginPage = () => {
-//   return (
-// <div className="login-container">
-//   <div className="login-form">
-//     <div className="form-box">
-//       <h2>Welcome Back to InternHub!</h2>
-//       <p className="sub-text">Sign in to explore opportunities</p>
-
-//       <form>
-//         <label>Email</label>
-//         <input type="email" placeholder="Enter your email" required />
-
-//         <label>Password</label>
-//         <input type="password" placeholder="Enter your password" required />
-
-//         <div className="form-options">
-//           <label>
-//             <input type="checkbox" /> Remember Me
-//           </label>
-//           <a href="/">Forgot Password?</a>
-//         </div>
-
-//         <button type="submit" className="login-btn">
-//           Login
-//         </button>
-//       </form>
-
-//       <p className="register-text">
-//         New to InternHub?<Link to="/SignUp">Sign Up</Link>
-
-//       </p>
-//     </div>
-//   </div>
-// </div>
-
-//   );
-// };
-
-// export default LoginPage;
-
-
-
 import React, { useState } from "react";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext.jsx"; 
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // store error messages
   const [loading, setLoading] = useState(false); // loading state
+  const { setUser, setToken } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -67,7 +27,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("http://127.0.0.1:8000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -80,7 +40,12 @@ const LoginPage = () => {
         setError(data.message || "Login failed. Please try again.");
       } else {
         // ✅ Login success → navigate to dashboard
-        localStorage.setItem("token", data.token); // optional: save token
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        setUser(data.user);
+        setToken(data.access_token);
+
         navigate("/dashboard");
       }
     } catch (err) {
@@ -123,7 +88,7 @@ const LoginPage = () => {
               <label>
                 <input type="checkbox" /> Remember Me
               </label>
-              <a href="/">Forgot Password?</a>
+              {/* <a href="/">Forgot Password?</a> */}
             </div>
 
             <button type="submit" className="login-btn" disabled={loading}>

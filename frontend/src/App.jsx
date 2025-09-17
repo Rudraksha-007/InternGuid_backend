@@ -10,6 +10,7 @@ import Discover from './components/Discover'
 import Dashboard from './components/Dashboard'
 import Home from './components/Home'
 import AdminDashboard from './components/Admin/Admin'
+import ProtectedRoute from './ProtectedRoute'
 const App = () => {
   return (
     <div>
@@ -19,7 +20,7 @@ const App = () => {
           <Route path='/' element={<Home/>}/>
           <Route path='/Login' element={<LoginPage/>}/>
           <Route path='/SignUp' element={<SignUpPage/>}/>
-          <Route path='/Profile' element={<ProfilePage/>}/>
+          <Route path='/profile' element={<ProfilePage/>}/>
           <Route path='/SmartAssistant' element={<Chatbot/>}/>
           <Route path='/Discover' element={<Discover/>}/>
           <Route path='/Dashboard' element={<Dashboard/>}/>

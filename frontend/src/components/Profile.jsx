@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../App.css"; // or './ProfilePage.css' if you're using a separate CSS file
 import Header from "./HeaderComponents/Header";
-
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext";
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   const [profile, setProfile] = useState({
     fullName: "",
@@ -19,6 +22,23 @@ const ProfilePage = () => {
     resume: null,
     profileImage: null,
   });
+
+  useEffect(() => {
+    if (user) {
+      setProfile({
+        fullName: user.name || "",
+        email: user.email || "",
+        phone: user.contact || "",
+        location: user.location?.[0] || "",
+        age: user.dob ? new Date().getFullYear() - new Date(user.dob).getFullYear() : "",
+        skills: user.skills ? user.skills.join(", ") : "",
+        qualification: user.education_level || "",
+        gender: user.gender || "",
+        resume: null,
+        profileImage: null,
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;

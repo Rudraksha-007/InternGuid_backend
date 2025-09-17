@@ -13,6 +13,8 @@ import {
   Zap
 } from "lucide-react";
 import "./MainDashboard.css";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthContext.jsx";
 
 const MainDashboard = () => {
   const topMatches = [
@@ -51,6 +53,8 @@ const MainDashboard = () => {
     }
   ];
 
+  const { user } = useContext(AuthContext);
+
   return (
     <section className="dashboard">
       <div className="dashboard-container">
@@ -64,7 +68,8 @@ const MainDashboard = () => {
         {/* Stats Section */}
         <div className="greeting-card">
         <div>
-          <h2 className="greeting-title">Hi, Alyssa 👋</h2>
+          {/* <h2 className="greeting-title">Welcome, {user.name}</h2> */}
+          <h2 className="greeting-title">Welcome, Alysaa</h2>           
           <p className="greeting-subtitle">
             Ready to explore internships and boost your career?
           </p>

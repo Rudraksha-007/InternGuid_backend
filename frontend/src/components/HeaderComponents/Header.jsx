@@ -1,8 +1,19 @@
 import { Users, Building, Home, LayoutDashboard, Compass, Bot } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from "react";
 import "./Header.css";
+import { AuthContext } from "../../AuthContext.jsx";
+
 
 const Header = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // redirect after logout
+  };
+  
   return (
     <>
       {/* Top Header */}
@@ -33,6 +44,10 @@ const Header = () => {
                 Profile
               </button>
             </Link>
+              <button className="profile-btn" onClick={handleLogout}>
+                <Users className="btn-icon" />                
+                Logout
+              </button>
           </div>
         </div>
       </header>

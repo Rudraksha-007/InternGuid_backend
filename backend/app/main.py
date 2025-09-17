@@ -4,6 +4,7 @@ from app import models
 from app.database import engine 
 from dotenv import load_dotenv
 import os
+from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
 models.Base.metadata.create_all(bind=engine)
@@ -12,6 +13,19 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 SECRET_KEY= os.getenv("SECRET_KEY")
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # React dev server
+    "http://127.0.0.1:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          
+    allow_credentials=True,
+    allow_methods=["*"],           
+    allow_headers=["*"],           
+)
 
 app.include_router(items.router)
 app.include_router(auth.router)
