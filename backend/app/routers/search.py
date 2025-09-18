@@ -29,18 +29,9 @@ def search_internships(
     r_index = current_user.r_index if hasattr(current_user, "r_index") else None
 
     try:
-        results = engine.search(query, r_index, top_k=5)
-        return {
-            "user": {
-                "id": str(current_user.user_id),
-                "name": current_user.name,
-                "email": current_user.email,
-                "skills": current_user.skills,
-                "domain": current_user.sector_interests,
-                "location": current_user.location,
-                "degree": current_user.education_level,
-            },
-            "recommendations": results.to_dict(orient="records")
-        }
+        # Call the search method with user details
+        results = engine.search(query, current_user, r_index, top_k=5)  # Pass current_user for details
+
+        return results  # Return the structured response directly from the search engine
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
