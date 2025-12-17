@@ -1,0 +1,18 @@
+graph TD
+    A[Client] --> B[FastAPI App]
+    B --> C[Auth Router]
+    B --> D[Items Router]
+    B --> E[Search Router]
+    E --> F[Search Engine Service]
+    F --> G[InternshipSearchEngine]
+    G --> H[DataLoader]
+    G --> I[Embedder]
+    G --> J[Scorer]
+    G --> K[Ranker]
+    C --> L[Database]
+    D --> L
+    E --> L
+    L --> M[User Model]
+    L --> N[Database Connection]
+    B --> O[CORS Middleware]
+    B --> P[Environment Config]
