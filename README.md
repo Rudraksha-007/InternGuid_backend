@@ -25,6 +25,16 @@ A robust FastAPI-based backend for an AI-powered internship search platform. Thi
 - **Async DB**: Motor for MongoDB
 - **Validation**: Pydantic
 
+## Design
+
+<img width="945" height="529" alt="Screenshot 2025-12-17 150255" src="https://github.com/user-attachments/assets/0f903cb6-8899-4163-8531-57c5f425b94f" />
+Overall Service 
+
+
+<img width="1091" height="359" alt="Screenshot 2025-12-17 150142" src="https://github.com/user-attachments/assets/950f16a8-5f34-4ca5-80b6-83d3db60db7e" />
+Search Engine Core
+
+
 ## Installation
 
 ### Prerequisites
