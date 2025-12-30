@@ -9,10 +9,7 @@ from ..auth import get_current_user  # JWT auth
 router = APIRouter(prefix="/search", tags=["Search"])
 
 @router.get("/internships")
-def search_internships(
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
-):
+def search_internships(db: Session = Depends(get_db),current_user: models.User = Depends(get_current_user)):
     """
     Fetch internships based on logged-in user details.
     """
