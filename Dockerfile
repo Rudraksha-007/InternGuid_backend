@@ -5,13 +5,13 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy app code
+COPY app/ app/
 
-# Precompute data
-RUN python precompute.py
+# Copy precomputed artifacts
+COPY chroma_db/ chroma_db/
+COPY *.pkl .
 
-# Expose port
 EXPOSE 8000
 
-# Run the app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
