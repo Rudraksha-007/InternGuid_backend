@@ -150,6 +150,45 @@ InternGuid_backend/
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Deployment
+
+The application is optimized for low-memory deployment (<512MB RAM) using precomputations and ChromaDB vector database.
+
+### Prerequisites
+
+- Internship data CSV file (set via `CSV_FILE` env var, default: `internship_database.csv`)
+- PostgreSQL database (e.g., Neon, Supabase)
+- Render account for hosting
+
+### Local Precomputation
+
+Before deployment, precompute embeddings and TF-IDF matrices:
+
+```bash
+python precompute.py
+```
+
+This creates ChromaDB collections and pickle files for fast loading.
+
+### Deploy on Render
+
+1. **Push code to GitHub** with precomputed data committed or generated in Docker build.
+
+2. **Create a new Web Service** on Render:
+   - Connect your GitHub repository
+   - Runtime: Docker
+   - Build Command: (leave default)
+   - Start Command: (leave default, uses Dockerfile)
+
+3. **Set Environment Variables**:
+   - `DATABASE_URL`: PostgreSQL connection string
+   - `SECRET_KEY`: Random secret for JWT
+   - `CSV_FILE`: Path to CSV (if not default)
+
+4. **Deploy**: Render will build the Docker image (which runs precompute.py) and start the service.
+
+The app uses ChromaDB for vector search, ensuring efficient memory usage.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
