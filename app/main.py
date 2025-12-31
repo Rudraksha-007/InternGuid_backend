@@ -5,6 +5,8 @@ from app.database import engine
 from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from app.services import search_engine  # Import to instantiate engine early
+
 load_dotenv()
 
 models.Base.metadata.create_all(bind=engine)
