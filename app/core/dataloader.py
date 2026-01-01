@@ -1,3 +1,4 @@
+from fastapi import Path
 import pandas as pd
 import os
 from dotenv import load_dotenv
@@ -6,7 +7,9 @@ load_dotenv()
 
 class DataLoader:
     def __init__(self):
-        self.csv_path = os.getenv("CSV_FILE", "internship_database.csv")
+        base_dir = Path(__file__).resolve().parent
+        csv_name = os.getenv("CSV_FILE", "internship_database.csv")
+        self.csv_path = base_dir / csv_name
 
     def load_data(self, csv_path: str = None) -> pd.DataFrame:
         """
