@@ -1,5 +1,6 @@
 import pytest
 import torch
+import numpy as np
 from app.core.embedder import Embedder
 
 def test_embedder_initialization():
