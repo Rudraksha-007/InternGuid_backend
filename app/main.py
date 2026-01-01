@@ -18,7 +18,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",  # React dev server
-    "http://127.0.0.1:5173"
+    "http://127.0.0.1:5173",
+    "http://10.24.99.95:5173" #prod frontend 
 ]
 
 app.add_middleware(
