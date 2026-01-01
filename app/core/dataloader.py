@@ -1,4 +1,4 @@
-from fastapi import Path
+from pathlib import Path
 import pandas as pd
 import os
 from dotenv import load_dotenv
@@ -12,13 +12,8 @@ class DataLoader:
         self.csv_path = base_dir / csv_name
 
     def load_data(self, csv_path: str = None) -> pd.DataFrame:
-        """
-        Loads internship data from CSV and performs basic preprocessing.
-        """
         if csv_path is None:
             csv_path = self.csv_path
         df = pd.read_csv(csv_path)
-        # Drop rows with missing critical fields
         df = df.dropna(subset=['skills', 'domain', 'title', 'location', 'degree'])
-        df = df.reset_index(drop=True)
-        return df
+        return df.reset_index(drop=True)
